@@ -508,7 +508,31 @@ btnBuscar.addEventListener('click', executeSearch);
   });
 });
 
+function clearSearchForm() {
+  inputRubrica.value = '';
+  selectContrato.value = 'Todos';
+  inputNombre.value = '';
+  inputNivel.value = '';
+  inputCentro.value = '';
+  inputCategoria.value = '';
+
+  antDia.value = '';
+  antMes.value = '';
+  antAnio.value = '';
+
+  antcatDia.value = '';
+  antcatMes.value = '';
+  antcatAnio.value = '';
+
+  nacDia.value = '';
+  nacMes.value = '';
+  nacAnio.value = '';
+
+  updateRubricaPriority();
+}
+
 btnBackResults.addEventListener('click', () => {
+  clearSearchForm();
   showScreen(screenMain);
 });
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'personal-xt-cache-v3';
+const CACHE_NAME = 'personal-xt-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
