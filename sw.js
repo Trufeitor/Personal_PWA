@@ -1,4 +1,4 @@
-const CACHE_NAME = 'personal-xt-cache-v4';
+const CACHE_NAME = 'personal-xt-cache-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -20,7 +20,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activación: reclamar clientes y limpiar cachés antiguas
+// Activación: reclamar clientes inmediatamente y limpiar cachés antiguas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -35,30 +35,31 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Intercepción de peticiones: Cache First con fallback de red
+// Estrategia Network-First con fallback a Cache:
+// Cuando hay conexión, carga siempre la última versión de GitHub inmediatamente.
+// Cuando no hay conexión (offline), sirve instantáneamente de la caché local.
 self.addEventListener('fetch', (event) => {
-  // Solo interceptar peticiones GET
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        // En segundo plano, si hay red, actualizamos la caché
-        fetch(event.request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse);
-            });
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Modo offline / sin conexión: servir desde caché local
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
           }
-        }).catch(() => {
-          // Sin conexión: no pasa nada, ya servimos de caché
+          return caches.match('./index.html');
         });
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => {
-        // Fallback a la raíz si no encuentra el recurso
-        return caches.match('./index.html');
-      });
-    })
+      })
   );
 });

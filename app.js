@@ -345,6 +345,8 @@ function executeSearch() {
     const rubricaInt = parseInt(rubricaVal, 10);
     const results = DATABASE.filter(e => e.r === rubricaInt);
     renderResults(results);
+    clearSearchForm();
+    history.pushState({ screen: 'results' }, '');
     showScreen(screenResults);
     return;
   }
@@ -426,6 +428,8 @@ function executeSearch() {
   });
 
   renderResults(filtered);
+  clearSearchForm();
+  history.pushState({ screen: 'results' }, '');
   showScreen(screenResults);
 }
 
@@ -531,9 +535,22 @@ function clearSearchForm() {
   updateRubricaPriority();
 }
 
-btnBackResults.addEventListener('click', () => {
+function returnToSearch() {
   clearSearchForm();
   showScreen(screenMain);
+}
+
+btnBackResults.addEventListener('click', () => {
+  if (history.state && history.state.screen === 'results') {
+    history.back();
+  } else {
+    returnToSearch();
+  }
+});
+
+// Soporte para gestos nativos de deslizar el borde en iPhone o botón atrás del navegador
+window.addEventListener('popstate', (e) => {
+  returnToSearch();
 });
 
 // Modal y bloqueo
