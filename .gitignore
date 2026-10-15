@@ -1,0 +1,16 @@
+# Archivos confidenciales de datos en crudo (NUNCA subir a GitHub)
+*.xlsx
+*.xls
+*.csv
+config.local.json
+*.local.json
+
+# Python
+__pycache__/
+*.pyc
+
+# IDEs y SO
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

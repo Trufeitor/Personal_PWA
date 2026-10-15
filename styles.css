@@ -1,0 +1,596 @@
+/* Personal XT+ - Estilos Material 3 optimizados para iOS Standalone */
+:root {
+  --primary: #6750A4;
+  --on-primary: #FFFFFF;
+  --primary-container: #EADDFF;
+  --on-primary-container: #21005D;
+  --surface: #FEF7FF;
+  --surface-dim: #DED8E1;
+  --surface-container: #F3EDF7;
+  --surface-container-high: #ECE6F0;
+  --on-surface: #1D1B20;
+  --on-surface-variant: #49454F;
+  --outline: #79747E;
+  --outline-variant: #CAC4D0;
+  --error: #B3261E;
+  
+  /* Colores corporativos y badges */
+  --color-indefinido: #1976D2;
+  --color-temporal: #D32F2F;
+  --color-antiguedad: #2E7D32;
+  --color-ant-cat: #D32F2F;
+  --color-nacimiento: #1976D2;
+  --color-categoria: #E65100;
+  
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+input, select, textarea {
+  user-select: text;
+  font-family: inherit;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Pantallas */
+.screen {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--surface);
+  overflow: hidden;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* Top AppBar */
+.top-app-bar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--surface-dim);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.top-app-bar .title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--on-surface-variant);
+}
+
+.icon-btn:active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   PANTALLA DE DESBLOQUEO / PIN
+   ========================================= */
+#screen-pin {
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.pin-container {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pin-logo {
+  width: 72px;
+  height: 72px;
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(103, 80, 164, 0.15);
+}
+
+.pin-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 4px;
+}
+
+.pin-subtitle {
+  font-size: 0.9rem;
+  color: var(--on-surface-variant);
+  margin-bottom: 24px;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  height: 20px;
+  align-items: center;
+}
+
+.pin-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--outline);
+  transition: all 0.15s ease;
+}
+
+.pin-dot.filled {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.15);
+}
+
+.pin-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  min-height: 20px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.pin-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.pin-key {
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--surface-container-high);
+  color: var(--on-surface);
+  font-size: 1.4rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.pin-key:active {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.pin-key.key-action {
+  font-size: 0.9rem;
+  background-color: transparent;
+  color: var(--on-surface-variant);
+}
+
+.pin-key.key-action:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.pin-keypad.locked {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.remember-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+}
+
+.remember-box input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+/* =========================================
+   PANTALLA PRINCIPAL (BÚSQUEDA NO-SCROLL)
+   ========================================= */
+.search-form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--outline-variant);
+  margin: 2px 0;
+  width: 100%;
+}
+
+/* Campos de entrada flotantes Material 3 */
+.input-group {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.input-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  margin-bottom: 2px;
+}
+
+.text-input, .select-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 10px;
+  background-color: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  color: var(--on-surface);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.text-input:focus, .select-input:focus {
+  border-color: var(--primary);
+  border-width: 2px;
+  padding: 0 9px;
+  background-color: #FFFFFF;
+}
+
+/* Estado deshabilitado por Rúbrica */
+.input-group.disabled-by-rubrica {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.disabled-click-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  cursor: pointer;
+}
+
+/* Filas de Fecha D/M/A */
+.date-row {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.date-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex: 1.5;
+  white-space: nowrap;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 6px;
+  flex: 2;
+}
+
+.date-input-box {
+  flex: 1;
+  height: 38px;
+  text-align: center;
+  padding: 0;
+  font-size: 0.9rem;
+  border-radius: var(--radius-xs);
+}
+
+.date-input-box.year {
+  flex: 1.4;
+}
+
+/* Botón Buscar */
+.btn-search {
+  position: relative;
+  z-index: 20;
+  height: 48px;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(103, 80, 164, 0.3);
+  margin-top: auto;
+  margin-bottom: 4px;
+}
+
+.btn-search:active {
+  background-color: #533E85;
+  box-shadow: 0 1px 3px rgba(103, 80, 164, 0.4);
+}
+
+/* =========================================
+   PANTALLA DE RESULTADOS
+   ========================================= */
+.results-list-container {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+  color: var(--on-surface-variant);
+  font-size: 1rem;
+  gap: 12px;
+}
+
+/* Tarjeta de Empleado */
+.card-empleado {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--outline-variant);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-rubrica {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.card-badge.indefinido {
+  background-color: var(--color-indefinido);
+}
+
+.card-badge.temporal {
+  background-color: var(--color-temporal);
+}
+
+.card-nivel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+}
+
+.card-nombre {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.card-categoria {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-categoria);
+  line-height: 1.2;
+}
+
+.card-centro {
+  font-size: 0.88rem;
+  color: var(--on-surface-variant);
+  line-height: 1.2;
+}
+
+.card-centro strong {
+  color: var(--on-surface);
+}
+
+.card-divider {
+  height: 0.5px;
+  background-color: var(--outline-variant);
+  margin: 6px 0;
+}
+
+.card-dates-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.date-badge-text {
+  display: flex;
+  gap: 3px;
+}
+
+.date-ant {
+  color: var(--color-antiguedad);
+}
+
+.date-ant-cat {
+  color: var(--color-ant-cat);
+}
+
+.date-nac {
+  color: var(--color-nacimiento);
+}
+
+/* =========================================
+   MODAL DE INFORMACIÓN / AJUSTES
+   ========================================= */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+.modal-info-list {
+  font-size: 0.9rem;
+  color: var(--on-surface-variant);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-modal-action {
+  height: 42px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-lock {
+  background-color: #F8D7DA;
+  color: var(--error);
+}
+
+.btn-close {
+  background-color: var(--surface-container-high);
+  color: var(--on-surface);
+}

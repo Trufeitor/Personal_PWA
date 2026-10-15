@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Personal XT+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- Configuración PWA para iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Personal XT">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  
+  <!-- Manifiesto Estándar -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6750A4">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    
+    <!-- =========================================
+         1. PANTALLA DE DESBLOQUEO / PIN
+         ========================================= -->
+    <div id="screen-pin" class="screen active">
+      <div class="pin-container">
+        <div class="pin-logo">XT+</div>
+        <div class="pin-title">Personal XT</div>
+        <div class="pin-subtitle">Introduce tu PIN de acceso</div>
+
+        <div class="pin-dots" id="pin-dots">
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+        </div>
+
+        <div class="pin-error" id="pin-error"></div>
+
+        <div class="pin-keypad">
+          <button class="pin-key" data-num="1">1</button>
+          <button class="pin-key" data-num="2">2</button>
+          <button class="pin-key" data-num="3">3</button>
+          <button class="pin-key" data-num="4">4</button>
+          <button class="pin-key" data-num="5">5</button>
+          <button class="pin-key" data-num="6">6</button>
+          <button class="pin-key" data-num="7">7</button>
+          <button class="pin-key" data-num="8">8</button>
+          <button class="pin-key" data-num="9">9</button>
+          <button class="pin-key key-action" id="btn-pin-clear">BORRAR</button>
+          <button class="pin-key" data-num="0">0</button>
+          <button class="pin-key key-action" id="btn-pin-backspace">⌫</button>
+        </div>
+
+        <label class="remember-box">
+          <input type="checkbox" id="check-remember" checked>
+          <span>Recordar en este dispositivo</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- =========================================
+         2. PANTALLA PRINCIPAL: BÚSQUEDA
+         ========================================= -->
+    <div id="screen-main" class="screen">
+      <!-- TopBar -->
+      <div class="top-app-bar">
+        <div class="title">Búsqueda de Personal</div>
+        <button class="icon-btn" id="btn-open-info" aria-label="Información">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Formulario Comprimido sin Scroll -->
+      <div class="search-form-container">
+        <!-- Fila 1: Rúbrica + Contrato -->
+        <div class="form-row">
+          <div class="input-group" style="flex: 1.2;">
+            <label class="input-label">Rúbrica</label>
+            <input type="tel" id="input-rubrica" class="text-input" maxlength="4" placeholder="4 dígitos" inputmode="numeric">
+          </div>
+          <div class="input-group other-field" style="flex: 1.8;">
+            <label class="input-label">Contrato</label>
+            <select id="select-contrato" class="select-input">
+              <option value="Todos">Todos</option>
+              <option value="Indefinido">Indefinido</option>
+              <option value="Temporal">Temporal</option>
+            </select>
+            <div class="disabled-click-overlay" style="display: none;"></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Fila 2: Apellidos / Nombre -->
+        <div class="input-group other-field">
+          <label class="input-label">Apellidos / Nombre</label>
+          <input type="text" id="input-nombre" class="text-input" placeholder="Buscar por palabras...">
+          <div class="disabled-click-overlay" style="display: none;"></div>
+        </div>
+
+        <!-- Fila 3: Nivel + Centro de Coste -->
+        <div class="form-row">
+          <div class="input-group other-field" style="flex: 1;">
+            <label class="input-label">Nivel</label>
+            <input type="text" id="input-nivel" class="text-input" maxlength="2" placeholder="Nivel">
+            <div class="disabled-click-overlay" style="display: none;"></div>
+          </div>
+          <div class="input-group other-field" style="flex: 2.2;">
+            <label class="input-label">Centro de Coste</label>
+            <input type="tel" id="input-centro" class="text-input" maxlength="4" placeholder="Código o Nombre" inputmode="numeric">
+            <div class="disabled-click-overlay" style="display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Fila 4: Categoría -->
+        <div class="input-group other-field">
+          <label class="input-label">Categoría</label>
+          <input type="text" id="input-categoria" class="text-input" placeholder="Nombre de categoría...">
+          <div class="disabled-click-overlay" style="display: none;"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Fila 5: Antigüedad (Verde) -->
+        <div class="date-row other-field">
+          <span class="date-label" style="color: var(--color-antiguedad);">Antigüedad</span>
+          <div class="date-inputs">
+            <input type="tel" id="ant-dia" class="text-input date-input-box" maxlength="2" placeholder="D" inputmode="numeric">
+            <input type="tel" id="ant-mes" class="text-input date-input-box" maxlength="2" placeholder="M" inputmode="numeric">
+            <input type="tel" id="ant-anio" class="text-input date-input-box year" maxlength="4" placeholder="AAAA" inputmode="numeric">
+          </div>
+          <div class="disabled-click-overlay" style="display: none;"></div>
+        </div>
+
+        <!-- Fila 6: Antigüedad Categoría (Rojo) -->
+        <div class="date-row other-field">
+          <span class="date-label" style="color: var(--color-ant-cat);">Antigüedad Cat.</span>
+          <div class="date-inputs">
+            <input type="tel" id="antcat-dia" class="text-input date-input-box" maxlength="2" placeholder="D" inputmode="numeric">
+            <input type="tel" id="antcat-mes" class="text-input date-input-box" maxlength="2" placeholder="M" inputmode="numeric">
+            <input type="tel" id="antcat-anio" class="text-input date-input-box year" maxlength="4" placeholder="AAAA" inputmode="numeric">
+          </div>
+          <div class="disabled-click-overlay" style="display: none;"></div>
+        </div>
+
+        <!-- Fila 7: Fecha de Nacimiento (Azul) -->
+        <div class="date-row other-field">
+          <span class="date-label" style="color: var(--color-nacimiento);">F. Nacimiento</span>
+          <div class="date-inputs">
+            <input type="tel" id="nac-dia" class="text-input date-input-box" maxlength="2" placeholder="D" inputmode="numeric">
+            <input type="tel" id="nac-mes" class="text-input date-input-box" maxlength="2" placeholder="M" inputmode="numeric">
+            <input type="tel" id="nac-anio" class="text-input date-input-box year" maxlength="4" placeholder="AAAA" inputmode="numeric">
+          </div>
+          <div class="disabled-click-overlay" style="display: none;"></div>
+        </div>
+
+        <!-- Botón de Búsqueda -->
+        <button id="btn-buscar" class="btn-search">BUSCAR</button>
+      </div>
+    </div>
+
+    <!-- =========================================
+         3. PANTALLA DE RESULTADOS
+         ========================================= -->
+    <div id="screen-results" class="screen">
+      <!-- TopBar Resultados -->
+      <div class="top-app-bar">
+        <button class="icon-btn" id="btn-back-results" aria-label="Volver">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+        </button>
+        <div class="title" id="results-title">Resultados (0)</div>
+        <div style="width: 40px;"></div> <!-- Espaciador para centrar título -->
+      </div>
+
+      <!-- Contenedor con Scroll de Tarjetas -->
+      <div class="results-list-container" id="results-container">
+        <!-- Renderizado dinámico desde app.js -->
+      </div>
+    </div>
+
+    <!-- =========================================
+         MODAL DE AJUSTES / INFORMACIÓN
+         ========================================= -->
+    <div class="modal-overlay" id="modal-info">
+      <div class="modal-card">
+        <div class="modal-title">Personal XT+</div>
+        <div class="modal-info-list">
+          <div><strong>Registros:</strong> <span id="info-total">--</span> empleados</div>
+          <div><strong>Base de datos:</strong> <span id="info-fecha">--</span></div>
+          <div><strong>Estado:</strong> 100% Offline</div>
+        </div>
+        <button class="btn-modal-action btn-lock" id="btn-lock-app">Bloquear aplicación (Pedir PIN)</button>
+        <button class="btn-modal-action btn-close" id="btn-close-modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Carga de datos cifrados y lógica -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
